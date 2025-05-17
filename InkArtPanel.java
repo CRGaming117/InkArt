@@ -1,4 +1,4 @@
-package inkArt;
+package InkArt;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -119,6 +119,7 @@ public class InkArtPanel extends JPanel {
 			break;
 			case KeyEvent.VK_C: bp.clear();pp.clear();p.clear();cr.setLocation(W*-1,H*-1);
 			break;
+			case KeyEvent.VK_ESCAPE: System.exit(0);		    
 			}
 			switch (pt) {
 			case "polygon":

@@ -1,4 +1,4 @@
-package inkArt;
+package InkArt;
 import javax.swing.JFrame;
 public class InkArtFrame {
 	public static void main(String[] args) {
