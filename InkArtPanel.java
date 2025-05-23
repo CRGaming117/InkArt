@@ -11,7 +11,6 @@ public class InkArtPanel extends JPanel {
   private String t, pt;
   private int px, py, mx, my, bw, pi;
   private Rectangle cr, co;
-  private Rectangle tM;
   private ArrayList<Rectangle> r, o;
   private ArrayList<Polygon> p;
 
@@ -32,16 +31,12 @@ public class InkArtPanel extends JPanel {
     o = new ArrayList<Rectangle>();
     p = new ArrayList<Polygon>();
 
-    // Tool Menu
-    tM = new Rectangle(5, 5, 60, 590);
-
     addMouseListener(new Clicking());
     addMouseMotionListener(new PlayerMover());
 
     this.addKeyListener(new ToolKeys());
     this.setFocusable(true);
 
-    // this.add(toolMenu);
   }
 
   public void paint(Graphics g) {
@@ -64,17 +59,17 @@ public class InkArtPanel extends JPanel {
     // Rectangle
     g.drawRect(cr.x, cr.y, cr.width, cr.height);
     // Previous rectangles
-    for (int i = 0; i < r.size() - 1; i++)
+    for (int i = 0; i < r.size(); i++) {
+      // System.out.println(new Rectangle(r.get(i).x, r.get(i).y, r.get(i).width,
+      // r.get(i).height));
       g.drawRect(r.get(i).x, r.get(i).y, r.get(i).width, r.get(i).height);
+    }
     // Previous Oval
-    for (int i = 0; i < o.size() - 1; i++)
+    for (int i = 0; i < o.size(); i++) {
       g.drawOval(o.get(i).x, o.get(i).y, o.get(i).width, o.get(i).height);
+    }
     // Oval
     g.drawOval(co.x, co.y, co.width, co.height);
-
-    // Tool Menu
-    g.setColor(Color.gray);
-    g.fillRect(tM.x, tM.y, tM.width, tM.height);
   }
 
   private class PlayerMover implements MouseMotionListener {
@@ -140,10 +135,17 @@ public class InkArtPanel extends JPanel {
     public void mouseReleased(MouseEvent e) {
       switch (t) {
         case "rectangle":
-          r.add(cr);
+          r.add(new Rectangle(cr));
+          // System.out.println("r: " + r.size());
+          // System.out.println(r.toString());
+          break;
         case "oval":
-          o.add(co);
+          o.add(new Rectangle(co));
+          // System.out.println("o: " + o.size());
+          // System.out.println(r.toString());
+          break;
       }
+      repaint();
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -178,6 +180,8 @@ public class InkArtPanel extends JPanel {
         case KeyEvent.VK_C:
           bp.clear();
           pp.clear();
+          r.clear();
+          o.clear();
           p.clear();
           cr.setLocation(W * -1, H * -1);
           co.setLocation(W * -1, H * -1);
@@ -197,6 +201,7 @@ public class InkArtPanel extends JPanel {
           pi = p.size();
           break;
       }
+      repaint();
     }
 
     public void keyReleased(KeyEvent e) {
