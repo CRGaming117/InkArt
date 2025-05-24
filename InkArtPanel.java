@@ -108,8 +108,7 @@ public class InkArtPanel extends JPanel {
     }
 
     public void mouseMoved(MouseEvent e) {
-      px = e.getX();
-      py = e.getY();
+      updateMouse(e);
       repaint();
     }
   }
